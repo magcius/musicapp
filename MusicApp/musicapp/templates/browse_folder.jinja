@@ -1,0 +1,20 @@
+{% extends "browse_base.jinja" %}
+{% block content %}
+<h2>{{ c.dirname }}</h2>
+<table class="FileGrid">
+  <thead>
+    <th>Filename</th>
+    <th>Size</th>
+  </thead>
+  <tbody>
+    {% for title, path, image, stat in c.files %}
+      <tr>
+        <td class="GridFilename">
+          <a class="{{ image }}" href="/browse/directory/{{ path }}"> {{ title }} </a>
+        </td>
+        <td class="GridSize"> {{ h.pretty_size(stat.st_size) }} </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

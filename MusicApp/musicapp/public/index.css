@@ -1,0 +1,219 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #aaaaaa;
+    font-family: sans;
+}
+
+div#Header {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 1em 0;
+    background: url(/header-grad.png) repeat-x left bottom;
+    background-color: #dddddd;
+    overflow: auto;
+    min-height: 150px;
+}
+
+div#Shadow {
+    display: block;
+    width: 100%;
+    height: 25px;
+    background: url(/shadow.png) repeat-x;
+}
+
+img {
+    border: 0;
+}
+
+h1 {
+    float: left;
+    background: url(/media-cdrom.png) no-repeat;
+    margin: 0;
+    margin-left: 20px;
+    padding-left: 140px;
+    line-height: 100px;
+    height: 128px;
+}
+
+h2 {
+    padding-left: 2em;
+}
+
+form#LoginForm {
+    float: right;
+    margin: 0 auto;
+    height: 100%;
+    padding-right: 40px;
+}
+
+form#LoginForm legend {
+    font-size: 1.2em;
+}
+
+form#LoginForm fieldset, form#Login ol, div#BrowseMenu ul, div#BrowseMenu li {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+form#LoginForm li {
+    width: 300px;
+    overflow: auto;
+    position: relative;
+    margin: .4em 1em;
+}
+
+form#LoginForm label {
+    float: left;
+    line-height: 1.5em;
+}
+
+form#LoginForm input {
+    float: right;
+    background: #ffffff;
+    border: 1px solid #aaaaaa;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: .2em 0em;
+}
+
+form#LoginForm input#LoginButton {
+    float: left;
+}
+
+form#LoginForm input:hover {
+    background: #444488;
+    color: #ffffff;
+}
+
+form#LoginForm input:focus {
+    background: #ffffff;
+    color: #000000;
+}
+
+form#LoginForm input:active {
+    background: #444488;
+    color: #dddddd;
+}
+
+li#SubmitButtons input {
+    width: 45%;
+}
+
+div#UserStatus {
+    text-align: right;
+    float: right;
+    margin-right: 40px;
+    font-size: 1.2em;
+}
+
+div#UserStatus ul, div#BrowseMenu ul {
+    list-style: none;
+}
+
+.UserProfile, .UserProfile a {
+    font-weight: bold;
+    color: #4444ff;
+}
+
+.UserProfile a:hover {
+    color: #ffffff;
+}
+
+div#BrowseMenu {
+    float: left;
+    font-size: 1.2em;
+    margin: 1em;
+    margin-left: 50px;
+}
+
+div#Container, div#Sidebar, div#Content {
+    min-height: 200px;
+    width: auto;
+    margin: .5em;
+    overflow: auto;
+}
+
+div#Container {
+    width: 98%;
+    display: table;
+    border-spacing: 1em;
+}
+
+div#Sidebar, div#Content {
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #dddddd;
+    display: table-cell;
+}
+
+div#Sidebar {
+    width: 25%;
+}
+
+li.Folder {
+    background: url(/folder.png) no-repeat;
+    padding-left: 20px;
+}
+
+ul.SubFolder, ul.RootTree {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.RootTree, table.FileGrid {
+    margin: 20px;
+    width: 90%;
+}
+
+td.GridSize {
+    text-align: right;
+}
+
+td.GridFilename a {
+    font-family: monospace;
+    padding-left: 24px;
+    background-repeat: no-repeat;
+    background-position: 2px 50%;
+}
+
+td.GridFilename a.folder {
+    background-image: url(/folder.png);
+}
+
+td.GridFilename a.file {
+    background-image: url(/file.png);
+}
+
+td.GridFilename a.music {
+    background-image: url(/music.png);
+}
+
+td.GridFilename a.image {
+    background-image: url(/image.png);
+}
+
+td.GridFilename a.up {
+    background-image: url(/up.png);
+}
+
+a:link, a:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    background: #444488;
+    color: #ffffff;
+}
+
+a:active {
+    color: #dddddd;
+}

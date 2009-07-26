@@ -1,0 +1,3 @@
+include musicapp/config/deployment.ini_tmpl
+recursive-include musicapp/public *
+recursive-include musicapp/templates *

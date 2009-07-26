@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+  <title>{{ g.title }} {{ g.app_version }}</title>
+  <link type="text/css" rel="stylesheet" media="screen" href="/index.css" />
+</head>
+<body>
+  <div id="Header">
+    <h1><a href="/">{{ g.title }}{% if c.title %} - {{ c.title }}{% endif %}</a></h1>
+    
+    {% if c.user %}
+    {% set u = c.user.username %}
+    <div id="UserStatus">
+      <ul>
+        <li class="UserProfile"> <a href="/user/{{ u }}/profile"> {{ u }} </a> </li>
+        <li class="UserAlbums">  <a href="/user/{{ u }}/albums">  My Albums </a> </li>
+        <li class="UserAccount"> <a href="/user/{{ u }}/account"> Upload Music </a> </li>
+        <li class="UserLogiut">  <a href="/user/{{ u }}/logout">  Log Out </a> </li>
+      </ul>
+    </div>
+    {% else %}
+    <form id="LoginForm" action="/login/commit/{{ request.path_qs }}" method="POST">
+      <fieldset>
+        <legend> Login </legend>
+        <ol>
+          <li>
+            <label for="Username">Username</label>
+            <input name="Username" id="Username" type="text" />
+          </li>
+          <li>
+            <label for="Password">Password</label>
+            <input name="Password" id="Password" type="text" />
+          </li>
+          <li id="SubmitButtons">
+            <input name="SubmitType" id="LoginButton" type="submit" value="Login" />
+            <input name="SubmitType" id="RegisterButton" type="submit" value="Register" />
+          </li>
+        </ol>
+      </fieldset>
+    </form>
+    {% endif %}
+    <div id="BrowseMenu">
+      <ul>
+        <li> <a href="/browse/artist/"> Artists </a> </li>
+        <li> <a href="/browse/album/"> Albums </a> </li>
+        <li> <a href="/browse/genre/"> Genres </a> </li>
+        <li> <a href="/browse/directory/"> Directories </a> </li>
+      </ul>
+    </div>
+  </div>
+  <div id="Shadow"></div>
+  <div id="Container">
+    <div id="Content">{% block content %}{% endblock %}</div>
+    <div id="Sidebar">{% block sidebar %}{% endblock %}</div>
+  </div>
+</body>
+</html>
