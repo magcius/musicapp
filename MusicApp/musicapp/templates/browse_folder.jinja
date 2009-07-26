@@ -1,20 +1,30 @@
-{% extends "browse_base.jinja" %}
+{% extends "browse_directory_base.jinja" %}
+
+{% macro sort_link(key) -%}
+  {{ request.path_url }}?sort={{ key }}
+  {%- if request.GET.sort == key -%}
+    &dir={{ "desc" if request.GET.dir == "asc" else "asc" }}
+  {%- endif -%}
+{%- endmacro -%}
+
 {% block content %}
-<h2>{{ c.dirname }}</h2>
+<h2>Index of Music/{{ c.path }}</h2>
 <table class="FileGrid">
   <thead>
-    <th>Filename</th>
-    <th>Size</th>
+    <th class="GridName"><a href="{{ sort_link("name") }}">Name</a></th>
+    <th class="GridSize"><a href="{{ sort_link("size") }}">Size</a></th>
+    <th class="GridType"><a href="{{ sort_link("type") }}">Type</a></th>
   </thead>
   <tbody>
-    {% for title, path, image, stat in c.files %}
+    {% for node in c.node.sorted_children() -%}
       <tr>
-        <td class="GridFilename">
-          <a class="{{ image }}" href="/browse/directory/{{ path }}"> {{ title }} </a>
+        <td class="GridName">
+          <a class="{{ node.icon }}" href="/browse/directory/{{ node.webpath }}"> {{ node.name }} </a>
         </td>
-        <td class="GridSize"> {{ h.pretty_size(stat.st_size) }} </td>
+        <td class="GridSize"> {{ node.pretty_size }} </td>
+        <td class="GridType"> {{ node.type }} </td>
       </tr>
-    {% endfor %}
+    {%- endfor %}
   </tbody>
 </table>
 {% endblock %}

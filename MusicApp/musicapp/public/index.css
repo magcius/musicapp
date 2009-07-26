@@ -39,6 +39,8 @@ h1 {
 }
 
 h2 {
+    margin: 0;
+    padding: 0;
     padding-left: 2em;
 }
 
@@ -71,8 +73,7 @@ form#LoginForm label {
     line-height: 1.5em;
 }
 
-form#LoginForm input {
-    float: right;
+input {
     background: #ffffff;
     border: 1px solid #aaaaaa;
     -moz-border-radius: 3px;
@@ -81,16 +82,12 @@ form#LoginForm input {
     padding: .2em 0em;
 }
 
-form#LoginForm input#LoginButton {
-    float: left;
-}
-
-form#LoginForm input:hover {
+input:hover {
     background: #444488;
     color: #ffffff;
 }
 
-form#LoginForm input:focus {
+input:focus {
     background: #ffffff;
     color: #000000;
 }
@@ -98,6 +95,14 @@ form#LoginForm input:focus {
 form#LoginForm input:active {
     background: #444488;
     color: #dddddd;
+}
+
+form#LoginForm input {
+    float: right;
+}
+
+form#LoginForm input#LoginButton {
+    float: left;
 }
 
 li#SubmitButtons input {
@@ -131,34 +136,88 @@ div#BrowseMenu {
     margin-left: 50px;
 }
 
-div#Container, div#Sidebar, div#Content {
+div#Container2, div#Sidebar, div#Content {
     min-height: 200px;
     width: auto;
     margin: .5em;
     overflow: auto;
 }
 
-div#Container {
-    width: 98%;
+div#Container2 {
     display: table;
     border-spacing: 1em;
 }
 
-div#Sidebar, div#Content {
+div#Container {
+    width: 100%;
+}
+
+div#Sidebar, div#Content, div#FlashMessage div {
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
     background-color: #dddddd;
+}
+
+div#FlashMessage {
+    width: 100%;
+}
+
+div#FlashMessage div {
+    display: block;
+    margin: 1em 1em 0;
+    padding: 1em;
+    font-size: 1.5em;
+}
+
+div#FlashMessage span {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 52px;
+    background-repeat: no-repeat;
+}
+
+div#FlashMessage.info span {
+    background-image: url(/info.png);
+}
+
+div#FlashMessage.info div {
+    background-color: #ddddff;
+}
+
+div#FlashMessage.error span {
+    background-image: url(/error.png);
+}
+
+div#FlashMessage.error div {
+    background-color: #ffdddd;
+}
+
+div#FlashMessage.warning span {
+    background-image: url(/warning.png);
+}
+
+div#FlashMessage.warning div {
+    background-color: #ffdddd;
+}
+
+div#Sidebar, div#Content {
     display: table-cell;
+    padding: 1em;
 }
 
 div#Sidebar {
     width: 25%;
 }
 
-li.Folder {
+ul.RootTree li.Folder, ul.RootTree li.FolderOpen {
     background: url(/folder.png) no-repeat;
     padding-left: 20px;
+}
+
+ul.RootTree li.FolderOpen {
+    background-image: url(/folder-open.png);
 }
 
 ul.SubFolder, ul.RootTree {
@@ -169,38 +228,45 @@ ul.SubFolder, ul.RootTree {
 }
 
 ul.RootTree, table.FileGrid {
-    margin: 20px;
-    width: 90%;
+    width: 100%;
 }
 
-td.GridSize {
+ul.RootTree li {
+    margin: .5em;
+}
+
+.GridName {
+    text-align: left;
+}
+
+.GridType, .GridSize {
     text-align: right;
 }
 
-td.GridFilename a {
+td.GridName a {
     font-family: monospace;
-    padding-left: 24px;
+    padding: 2px 4px 2px 24px;
     background-repeat: no-repeat;
     background-position: 2px 50%;
 }
 
-td.GridFilename a.folder {
+td.GridName a.folder {
     background-image: url(/folder.png);
 }
 
-td.GridFilename a.file {
+td.GridName a.file {
     background-image: url(/file.png);
 }
 
-td.GridFilename a.music {
+td.GridName a.music {
     background-image: url(/music.png);
 }
 
-td.GridFilename a.image {
+td.GridName a.image {
     background-image: url(/image.png);
 }
 
-td.GridFilename a.up {
+td.GridName a.up {
     background-image: url(/up.png);
 }
 

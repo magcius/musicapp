@@ -49,9 +49,15 @@
     </div>
   </div>
   <div id="Shadow"></div>
+  {% for type, message in session.messages %}
+    <div id="FlashMessage" class="{{ type }}"> <div> <span> {{ message }} </span> </div> </div>
+    {% do h.delete_messages() %}
+  {% endfor %}
   <div id="Container">
-    <div id="Content">{% block content %}{% endblock %}</div>
-    <div id="Sidebar">{% block sidebar %}{% endblock %}</div>
+    <div id="Container2">
+      <div id="Content">{% block content %}{% endblock %}</div>
+      <div id="Sidebar">{% block sidebar %}{% endblock %}</div>
+    </div>
   </div>
 </body>
 </html>

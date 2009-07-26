@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 class LoginController(BaseController):
 
-    def commit(self):
+    def commit(self, path=""):
         # Return a rendered template
         #return render('/login.mako')
         # or, return a response

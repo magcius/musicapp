@@ -21,8 +21,13 @@ def make_map():
     # CUSTOM ROUTES HERE
     
     map.connect('home', '/', controller='index', action='index')
+    
     map.connect('browsedir', '/browse/directory/*path', controller='browse', action='directory')
     map.connect('browsedir_nopath', '/browse/directory', controller='browse', action='directory', path='')
+
+    map.connect('logincommit', '/login/commit/*path', controller='login', action='commit')
+    map.connect('logincommit_nopath', '/login/commit', controller='login', action='commit', path='')
+    
     map.connect('/{controller}/{action}')
 
     map.redirect('/*(url)/', '/{url}', _redirect_code='301 Moved Permanently')

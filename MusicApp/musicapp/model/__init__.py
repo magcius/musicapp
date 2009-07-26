@@ -1,4 +1,4 @@
-"""The application's model objects"""
+b"""The application's model objects"""
 import sqlalchemy as sa
 from sqlalchemy import orm
 
@@ -46,10 +46,3 @@ class User(object):
 
 orm.mapper(User, user_table)
 
-
-## Classes for reflected tables may be defined here, but the table and
-## mapping itself must be done in the init_model function
-#reflected_table = None
-#
-#class Reflected(object):
-#    pass
