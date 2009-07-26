@@ -1,0 +1,13 @@
+{% extends "base.jinja" %}
+{% block sidebar %}
+  <h2>Browse by Directory</h2>
+  <br />
+  <ul class="RootTree">
+  {% for node in c.root_node.sorted_directories('name') recursive %}
+    <li class="Folder{{ "Open" if node.webpath == c.path else "" }}"><a href="/browse/directory/{{ node.webpath }}"> {{ node.name }}</a>{% if node.directories %}
+      <ul class="SubFolder"> {{ loop(node.directories) }} </ul>
+    {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}
