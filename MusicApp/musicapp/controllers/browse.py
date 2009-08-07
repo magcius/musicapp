@@ -1,4 +1,4 @@
-import logging
+zimport logging
 
 import os
 import mutagen
@@ -27,16 +27,16 @@ media_path = os.path.abspath(config["media.path"])
 @decorator
 def browse_prelude(fn, *args, **kwargs):
     c.root_node = Session.query(RootNode).first()
-    returnfn(*args, **kwargs)
+    return fn(*args, **kwargs)
 
 def browse_fs_prelude(type_=FSNode):
-    def internal(fn, path=""):
+    def internal(self, fn, path=""):
         if not validate_path(path):
             add_message("error", "Nice try...")
             redirect_to(controller="browse", action="directory", path="")
             
-        c.node = Session.query(type_).filter(type_.webpath == path.first())
-        return fn(path)
+        c.node = Session.query(type_).filter(type_.webpath == path).first()
+        return fn(self, path)
     return decorator(internal)
     
 class BrowseController(BaseController):
