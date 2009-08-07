@@ -6,6 +6,7 @@ refer to the routes manual at http://routes.groovie.org/docs/
 """
 from pylons import config
 from routes import Mapper
+from formalchemy.ext.pylons import maps as admin_maps
 
 def make_map():
     """Create, configure and return the routes Mapper"""
@@ -22,13 +23,10 @@ def make_map():
     
     map.connect('home', '/', controller='index', action='index')
     
-    map.connect('browsedir', '/browse/directory/*path', controller='browse', action='directory')
-    map.connect('browsedir_nopath', '/browse/directory', controller='browse', action='directory', path='')
-
-    map.connect('logincommit', '/login/commit/*path', controller='login', action='commit')
-    map.connect('logincommit_nopath', '/login/commit', controller='login', action='commit', path='')
-    
+    map.connect('/{controller}/{action}/*path')
     map.connect('/{controller}/{action}')
+
+    admin_maps.admin_map(map, controller='admin', url='/admin')
 
     map.redirect('/*(url)/', '/{url}', _redirect_code='301 Moved Permanently')
     

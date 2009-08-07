@@ -1,6 +1,5 @@
-
 import logging
-from musicapp.lib.base import BaseController, render
+from musicapp.lib.base import BaseController
 from musicapp import model
 from musicapp import forms
 from musicapp.model import meta

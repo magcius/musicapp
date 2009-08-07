@@ -2,8 +2,8 @@
 
 {% macro sort_link(key) -%}
   {{ request.path_url }}?sort={{ key }}
-  {%- if request.GET.sort == key -%}
-    &dir={{ "desc" if request.GET.dir == "asc" else "asc" }}
+  {%- if c.key == key -%}
+    &dir={{ "asc" if reverse else "desc" }}
   {%- endif -%}
 {%- endmacro -%}
 
@@ -16,10 +16,10 @@
     <th class="GridType"><a href="{{ sort_link("type") }}">Type</a></th>
   </thead>
   <tbody>
-    {% for node in c.node.sorted_children() -%}
+    {% for node in c.node.sorted_children(c.key, c.reverse) -%}
       <tr>
         <td class="GridName">
-          <a class="{{ node.icon }}" href="/browse/directory/{{ node.webpath }}"> {{ node.name }} </a>
+          <a class="{{ node.icon }}" href="/browse/{{ node.filetype }}{{ node.webpath }}"> {{ node.name }} </a>
         </td>
         <td class="GridSize"> {{ node.pretty_size }} </td>
         <td class="GridType"> {{ node.type }} </td>
