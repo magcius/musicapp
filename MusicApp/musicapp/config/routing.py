@@ -23,8 +23,9 @@ def make_map():
     
     map.connect('home', '/', controller='index', action='index')
     
-    map.connect('/{controller}/{action}/*path')
     map.connect('/{controller}/{action}')
+    map.connect('/{controller}/{action}/*path')    
+    map.connect('/{controller}/{action}/{id}')
 
     admin_maps.admin_map(map, controller='admin', url='/admin')
 

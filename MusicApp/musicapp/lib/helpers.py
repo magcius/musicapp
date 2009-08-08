@@ -5,7 +5,6 @@ available to Controllers. This module is available to templates as 'h'.
 """
 # Import helpers as desired, or define your own, ie:
 from webhelpers.html import escape
-from pylons import session
 # from webhelpers.html.tags import *
 
 
@@ -20,16 +19,9 @@ def pretty_size(size):
         else:
             return u"%d %s" % (round(size/float(lim/2**10),2), suf)
 
-
-def add_message(type, message):
-    session.setdefault('messages', [])
-    session['messages'].append((type, message))
-    session.save()
-
-def delete_messages():
-    if 'messages' in session:
-        del session['messages']
-        session.save()
-
 def pluralize(v):
     return v, "" if v == 1 else "s"
+
+def get_all_messages():
+    from musicapp.model.messages import get_all_messages
+    return get_all_messages()

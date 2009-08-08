@@ -148,29 +148,36 @@ div#Container2 {
     border-spacing: 1em;
 }
 
-div#Container {
+div#Container, div.FlashMessage, div.FullWidth {
     width: 100%;
 }
 
-div#Sidebar, div#Content, div#FlashMessage div {
+div#Sidebar, div#Content, div.FlashMessage div, div.FullWidth div {
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
     background-color: #dddddd;
 }
 
-div#FlashMessage {
-    width: 100%;
-}
-
-div#FlashMessage div {
+div.FlashMessage div {
     display: block;
     margin: 1em 1em 0;
     padding: 1em;
     font-size: 1.5em;
 }
 
-div#FlashMessage span {
+div.FlashMessage div a.CloseButton {
+    color: #cccccc;
+    display: block;
+    float: right;
+    cursor: hand;
+}
+
+div.FlashMessage div a.CloseButton:hover {
+    color: #aaaaaa;
+}
+
+div.FlashMessage span {
     display: block;
     height: 50px;
     line-height: 50px;
@@ -178,27 +185,27 @@ div#FlashMessage span {
     background-repeat: no-repeat;
 }
 
-div#FlashMessage.info span {
+div.FlashMessage.info span {
     background-image: url(/info.png);
 }
 
-div#FlashMessage.info div {
+div.FlashMessage.info div {
     background-color: #ddddff;
 }
 
-div#FlashMessage.error span {
+div.FlashMessage.error span {
     background-image: url(/error.png);
 }
 
-div#FlashMessage.error div {
+div.FlashMessage.error div {
     background-color: #ffdddd;
 }
 
-div#FlashMessage.warning span {
+div.FlashMessage.warning span {
     background-image: url(/warning.png);
 }
 
-div#FlashMessage.warning div {
+div.FlashMessage.warning div {
     background-color: #ffdddd;
 }
 

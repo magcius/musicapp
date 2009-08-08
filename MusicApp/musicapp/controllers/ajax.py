@@ -4,13 +4,11 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
 
 from musicapp.lib.base import BaseController, render
+from musicapp.model.messages import del_message
 
 log = logging.getLogger(__name__)
 
-class LoginController(BaseController):
+class AjaxController(BaseController):
 
-    def commit(self, path=""):
-        # Return a rendered template
-        #return render('/login.mako')
-        # or, return a response
-        pass
+    def remove_message(self, id):
+        return 't' if del_message(id) else 'f'

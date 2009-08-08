@@ -3,13 +3,16 @@
 <head>
   <title>{{ g.title }} {{ g.app_version }}</title>
   <link type="text/css" rel="stylesheet" media="screen" href="/index.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://openid-realselector.googlecode.com/svn/trunk/js/jquery.openid.min.js"></script>
+  <script type="text/javascript" src="/site.js"></script>
 </head>
 <body>
   <div id="Header">
     <h1><a href="/">{{ g.title }}{% if c.title %} - {{ c.title }}{% endif %}</a></h1>
     
-    {% if c.user %}
-    {% set u = c.user.username %}
+    {%- if c.user -%}
+    {%- set u = c.user.username -%}
     <div id="UserStatus">
       <ul>
         <li class="UserProfile"> <a href="/user/{{ u }}/profile"> {{ u }} </a> </li>
@@ -18,27 +21,9 @@
         <li class="UserLogiut">  <a href="/user/{{ u }}/logout">  Log Out </a> </li>
       </ul>
     </div>
-    {% else %}
-    <form id="LoginForm" action="/login/commit/{{ request.path_qs }}" method="POST">
-      <fieldset>
-        <legend> Login </legend>
-        <ol>
-          <li>
-            <label for="Username">Username</label>
-            <input name="Username" id="Username" type="text" />
-          </li>
-          <li>
-            <label for="Password">Password</label>
-            <input name="Password" id="Password" type="text" />
-          </li>
-          <li id="SubmitButtons">
-            <input name="SubmitType" id="LoginButton" type="submit" value="Login" />
-            <input name="SubmitType" id="RegisterButton" type="submit" value="Register" />
-          </li>
-        </ol>
-      </fieldset>
-    </form>
-    {% endif %}
+    {%- else -%}
+    <form id="LoginForm" action="/auth/login/commit/?came_from={{ request.path_qs }}" method="POST"></form>
+    {%- endif -%}
     <div id="BrowseMenu">
       <ul>
         <li> <a href="/browse/artist/"> Artists </a> </li>
@@ -49,15 +34,20 @@
     </div>
   </div>
   <div id="Shadow"></div>
-  {% for type, message in session.messages %}
-    <div id="FlashMessage" class="{{ type }}"> <div> <span> {{ message }} </span> </div> </div>
-    {% do h.delete_messages() %}
-  {% endfor %}
+  {%- for id, (type, message) in h.get_all_messages().iteritems() -%}
+    <div class="FlashMessage {{ type }}" id="FlashMessage_{{ id }}"> <div> <span> {{ message }} </span> </div> </div>
+  {%- endfor -%}
+  {% block body_content %}
   <div id="Container">
+    {%- block container -%}
     <div id="Container2">
+      {%- block container2 -%}
       <div id="Content">{% block content %}{% endblock %}</div>
       <div id="Sidebar">{% block sidebar %}{% endblock %}</div>
+      {%- endblock -%}
     </div>
+    {%- endblock -%}
   </div>
+  {% endblock %}
 </body>
 </html>

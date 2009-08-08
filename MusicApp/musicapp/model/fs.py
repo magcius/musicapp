@@ -3,20 +3,25 @@ import os
 import operator
 
 import sqlalchemy.orm
+import sqlalchemy
 import sqlamp
 
 from musicapp.lib.helpers import pretty_size, pluralize
 from musicapp.model import meta, tree
 
+import logging
+
+debug_count = 0
+
 fsnode_table = sqlalchemy.Table('fsnode', meta.metadata,
     sqlalchemy.Column('node_id', sqlalchemy.Integer, sqlalchemy.ForeignKey('node.id'), primary_key=True),
+    sqlalchemy.Column('size', sqlalchemy.Integer),
     sqlalchemy.Column('webpath', sqlalchemy.String, nullable=True),
     sqlalchemy.Column('localpath', sqlalchemy.String, nullable=True),
 )
 
 filenode_table = sqlalchemy.Table('filenode', meta.metadata,
     sqlalchemy.Column('fsnode_id', sqlalchemy.Integer, sqlalchemy.ForeignKey('fsnode.node_id'), primary_key=True),
-    sqlalchemy.Column('size', sqlalchemy.Integer),
     sqlalchemy.Column('filetype', sqlalchemy.String, nullable=False),
     sqlalchemy.Column('icon', sqlalchemy.String, nullable=False),
 )
@@ -45,6 +50,14 @@ class DirectoryNode(FSNode):
     @property
     def pretty_size(self):
         return "%d item%s" % pluralize(self.size)
+
+    @property
+    def files(self):
+        return meta.Session.query(FileNode).filter(self.mp.filter_children())
+    
+    @property
+    def directories(self):
+        return meta.Session.query(DirectoryNode).filter(self.mp.filter_children())
     
     def sorted_files(self, key):
         return sorted(self.files, key=operator.attrgetter(key))
@@ -53,6 +66,7 @@ class DirectoryNode(FSNode):
         return sorted(self.directories, key=operator.attrgetter(key))
 
     def sorted_children(self, key, reverse):
+        print "getting children"
         children = (self.sorted_directories(key) + self.sorted_files(key))
         if reverse:
             children.reverse()
@@ -87,13 +101,14 @@ class FileNode(FSNode):
         self.size = os.stat(self.localpath).st_size    
 
 fsnode_mapper   = sqlalchemy.orm.mapper(FSNode, fsnode_table, inherits=tree.Node, polymorphic_identity='fsnode')
-rootnode_mapper = sqlalchemy.orm.mapper(RootNode, inherits=fsnode_mapper, polymorphic_identity='rootnode')
-dirnode_mapper  = sqlalchemy.orm.mapper(DirectoryNode, inherits=fsnode_mapper, polymorphic_identity='dirnode')
+dirnode_mapper  = sqlalchemy.orm.mapper(DirectoryNode, inherits=FSNode, polymorphic_identity='dirnode')
+rootnode_mapper = sqlalchemy.orm.mapper(RootNode, inherits=DirectoryNode, polymorphic_identity='rootnode')
 filenode_mapper = sqlalchemy.orm.mapper(FileNode, filenode_table, inherits=FSNode, polymorphic_identity='filenode')
 
 def clear_tree():
-    meta.Session.query(RootNode).delete()
-
+    for node in meta.Session.query(RootNode):
+        meta.Session.delete(node)
+    
 def walk_media(media_path):
     # Create our root node.
     root = RootNode(media_path)
@@ -106,8 +121,6 @@ def walk_media(media_path):
         
         if path == media_path:
             continue
-
-        print "Creating DirectoryNode for %r" % path
         
         # Find our parent path and direectory name
         parent_path, name = os.path.split(path)
@@ -122,10 +135,16 @@ def walk_media(media_path):
         for filename in files:
             filenode = node.add_child(FileNode(filename.decode('utf8')))
             filenode.calculate_size()
-            #meta.Session.add(filenode)
 
+    logger = logging.getLogger("sqlalchemy")
+    level = logger.level
+    logger.setLevel(logging.WARN)
+    
     # Save our data in the database.
     meta.Session.add(root)
     meta.Session.commit()
+
+    # And revert back to what it was before.
+    logger.setLevel(level)
     
     return root
